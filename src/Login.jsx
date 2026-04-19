@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import './login.css';
+import './Login.css';
+import api from './api';
 
-export default function Login({ onSwitch }) {
+export default function Login({ onSwitch, onLogin }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle login logic here
-        console.log('Login attempt:', { email, password });
+        try {
+            const { data } = await api.post('/api/Auth/login', { email, password });
+            localStorage.setItem('token', data.Token);
+            localStorage.setItem('userId', data.UserId);
+            localStorage.setItem('email', data.Email);
+            console.log('Login successful:', data);
+            onLogin();
+        } catch (err) {
+            console.error('Login failed:', err);
+        }
     };
 
     return (

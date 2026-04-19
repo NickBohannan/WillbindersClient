@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
-import './login.css';
+import './Login.css';
+import api from './api';
 
-export default function Register({ onSwitch }) {
+export default function Register({ onSwitch, onRegister }) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Register attempt:', { firstName, lastName, email, password });
+        try {
+            const { data } = await api.post('/api/Auth/register', { firstName, lastName, email, password });
+            console.log('Registration successful:', data);
+            onRegister();
+        } catch (err) {
+            console.error('Registration failed:', err);
+        }
     };
 
     return (

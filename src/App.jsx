@@ -2,15 +2,16 @@ import { useState } from 'react'
 import './App.css'
 import Login from './Login'
 import Register from './Register'
+import MainMenu from './MainMenu'
 
 function App() {
   const [page, setPage] = useState('login')
 
   return (
     <>
-      {page === 'login'
-        ? <Login onSwitch={() => setPage('register')} />
-        : <Register onSwitch={() => setPage('login')} />}
+      {page === 'login' && <Login onSwitch={() => setPage('register')} onLogin={() => setPage('menu')} />}
+      {page === 'register' && <Register onSwitch={() => setPage('login')} onRegister={() => setPage('login')} />}
+      {page === 'menu' && <MainMenu onNavigate={setPage} />}
     </>
   )
 }
