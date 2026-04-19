@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import './Login.scss';
 import api from './api';
 
 export default function Login({ onSwitch, onLogin }) {

@@ -1,0 +1,16 @@
+$accent: #646cff;
+
+.switch-link {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+
+    a {
+        color: $accent;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

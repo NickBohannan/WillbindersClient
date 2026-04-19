@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './App.css'
+import './App.scss'
 import Login from './Login'
 import Register from './Register'
 import MainMenu from './MainMenu'

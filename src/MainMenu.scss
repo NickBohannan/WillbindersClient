@@ -1,0 +1,38 @@
+$accent: #646cff;
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 1rem;
+
+    .menu-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .menu-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 240px;
+    }
+
+    .menu-button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border: 2px solid $accent;
+        border-radius: 6px;
+        background: transparent;
+        color: inherit;
+        transition: background 0.2s, color 0.2s;
+
+        &:hover {
+            background: $accent;
+            color: #fff;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './MainMenu.css';
+import './MainMenu.scss';
 
 const menuItems = [
     { label: 'Enter Map', page: 'map' },
