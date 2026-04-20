@@ -5,18 +5,20 @@ import api from './api';
 export default function Login({ onSwitch, onLogin }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
         try {
             const { data } = await api.post('/api/Auth/login', { email, password });
             localStorage.setItem('token', data.Token);
             localStorage.setItem('userId', data.UserId);
             localStorage.setItem('email', data.Email);
-            console.log('Login successful:', data);
             onLogin();
         } catch (err) {
-            console.error('Login failed:', err);
+            const message = err.response?.data || 'Login failed. Please try again.';
+            setError(typeof message === 'string' ? message : 'Login failed. Please try again.');
         }
     };
 
@@ -47,6 +49,7 @@ export default function Login({ onSwitch, onLogin }) {
                     </div>
                     <button type="submit">Login</button>
                 </form>
+                {error && <p className="error-message">{error}</p>}
                 <p className="switch-link">
                     Don't have an account?{' '}
                     <a href="#" onClick={(e) => { e.preventDefault(); onSwitch(); }}>Register</a>

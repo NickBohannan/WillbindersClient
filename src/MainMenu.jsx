@@ -9,6 +9,13 @@ const menuItems = [
 ];
 
 export default function MainMenu({ onNavigate }) {
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('email');
+        onNavigate('login');
+    };
+
     return (
         <div className="menu-container">
             <h1 className="menu-title">Willbinders</h1>
@@ -22,6 +29,9 @@ export default function MainMenu({ onNavigate }) {
                         {item.label}
                     </button>
                 ))}
+                <button className="menu-button logout-button" onClick={handleLogout}>
+                    Logout
+                </button>
             </nav>
         </div>
     );

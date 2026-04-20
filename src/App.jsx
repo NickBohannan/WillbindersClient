@@ -5,12 +5,12 @@ import Register from './Register'
 import MainMenu from './MainMenu'
 
 function App() {
-  const [page, setPage] = useState('login')
+  const [page, setPage] = useState(() => localStorage.getItem('token') ? 'menu' : 'login')
 
   return (
     <>
       {page === 'login' && <Login onSwitch={() => setPage('register')} onLogin={() => setPage('menu')} />}
-      {page === 'register' && <Register onSwitch={() => setPage('login')} onRegister={() => setPage('login')} />}
+      {page === 'register' && <Register onSwitch={() => setPage('login')} />}
       {page === 'menu' && <MainMenu onNavigate={setPage} />}
     </>
   )

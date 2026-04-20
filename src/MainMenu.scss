@@ -35,4 +35,15 @@ $accent: #646cff;
             color: #fff;
         }
     }
+
+    .logout-button {
+        margin-top: 1rem;
+        border-color: #e05c5c;
+        color: #e05c5c;
+
+        &:hover {
+            background: #e05c5c;
+            color: #fff;
+        }
+    }
 }
