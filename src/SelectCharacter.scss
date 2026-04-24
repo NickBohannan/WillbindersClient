@@ -1,0 +1,58 @@
+.select-character-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.select-character-card {
+    width: min(760px, 100%);
+    border: 1px solid #444;
+    border-radius: 12px;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.select-character-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.back-button {
+    border: 1px solid #777;
+    border-radius: 6px;
+    padding: 0.45rem 0.85rem;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.error-message {
+    color: #d85c5c;
+}
+
+.character-list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.character-item {
+    border: 1px solid #5a5a5a;
+    border-radius: 8px;
+    padding: 0.9rem;
+
+    h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    p {
+        margin: 0.2rem 0;
+    }
+}
