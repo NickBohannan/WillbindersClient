@@ -1,7 +1,9 @@
 @use 'index';
+
 body {
     background-color: index.$crayola-blue;
 }
+
 .error-message {
     margin-top: 0.75rem;
     color: #e05c5c;
