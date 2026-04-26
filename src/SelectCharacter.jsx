@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from './api';
 import './SelectCharacter.scss';
 
-export default function SelectCharacter({ onBack }) {
+export default function SelectCharacter({ onBack, onEnterMap = () => {} }) {
     const [characters, setCharacters] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
@@ -54,6 +54,15 @@ export default function SelectCharacter({ onBack }) {
                                 <p>Zone: {character.CurrentZone}</p>
                                 <p>Experience: {character.Experience}</p>
                                 <p>Power: {character.Power}</p>
+                                <div className="character-actions">
+                                    <button
+                                        type="button"
+                                        className="enter-map-button"
+                                        onClick={() => onEnterMap(character)}
+                                    >
+                                        Enter Map
+                                    </button>
+                                </div>
                             </li>
                         ))}
                     </ul>

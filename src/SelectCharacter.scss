@@ -56,3 +56,20 @@
         margin: 0.2rem 0;
     }
 }
+
+.character-actions {
+    margin-top: 0.7rem;
+}
+
+.enter-map-button {
+    border: 1px solid #777;
+    border-radius: 6px;
+    padding: 0.45rem 0.85rem;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+        border-color: #9a9a9a;
+    }
+}
