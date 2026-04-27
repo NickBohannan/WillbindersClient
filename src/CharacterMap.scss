@@ -75,6 +75,23 @@
     gap: 0.2rem 0.8rem;
 }
 
+.control-score-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.control-score-item {
+    border: 1px solid #5a5a5a;
+    border-radius: 8px;
+    padding: 0.65rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.2rem 0.8rem;
+}
+
 .map-character-list {
     list-style: none;
     margin: 0;

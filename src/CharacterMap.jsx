@@ -7,10 +7,13 @@ export default function CharacterMap({ character, onBack, onSelectCharacter }) {
     const mapId = character?.CurrentMap;
     const [mapCharacters, setMapCharacters] = useState([]);
     const [mapData, setMapData] = useState(null);
+    const [controlScores, setControlScores] = useState([]);
     const [isLoadingMapData, setIsLoadingMapData] = useState(false);
     const [isLoadingCharacters, setIsLoadingCharacters] = useState(false);
+    const [isLoadingControlScores, setIsLoadingControlScores] = useState(false);
     const [mapLoadError, setMapLoadError] = useState('');
     const [loadError, setLoadError] = useState('');
+    const [controlScoreError, setControlScoreError] = useState('');
 
     const fetchCharactersInMap = async (showLoadingState = false) => {
         if (!hasCharacter || !mapId) {
@@ -64,9 +67,35 @@ export default function CharacterMap({ character, onBack, onSelectCharacter }) {
         }
     };
 
+    const fetchControlScores = async (showLoadingState = false) => {
+        if (!hasCharacter || !mapId) {
+            setControlScores([]);
+            setControlScoreError('');
+            setIsLoadingControlScores(false);
+            return;
+        }
+
+        if (showLoadingState) {
+            setIsLoadingControlScores(true);
+        }
+        setControlScoreError('');
+
+        try {
+            const { data } = await api.get(`/api/RealmData/GetControlAccumulationScoresByMapAsync/${mapId}`);
+            setControlScores(Array.isArray(data) ? data : []);
+        } catch (err) {
+            const message = err.response?.data || 'Failed to load control accumulation scores.';
+            setControlScoreError(typeof message === 'string' ? message : 'Failed to load control accumulation scores.');
+            setControlScores([]);
+        } finally {
+            setIsLoadingControlScores(false);
+        }
+    };
+
     useEffect(() => {
         fetchMapData(true);
         fetchCharactersInMap(true);
+        fetchControlScores(true);
 
         if (!hasCharacter || !mapId) {
             return;
@@ -75,12 +104,21 @@ export default function CharacterMap({ character, onBack, onSelectCharacter }) {
         const intervalId = window.setInterval(() => {
             fetchMapData();
             fetchCharactersInMap();
+            fetchControlScores();
         }, 30000);
 
         return () => {
             window.clearInterval(intervalId);
         };
     }, [hasCharacter, mapId]);
+
+    const zoneNameById = Array.isArray(mapData?.Zones)
+        ? new Map(
+            mapData.Zones
+                .map((zone) => [zone.ZoneId ?? zone.Id, zone.Name ?? 'Unnamed Zone'])
+                .filter(([zoneId]) => Number.isFinite(zoneId))
+        )
+        : new Map();
 
     return (
         <div className="character-map-page">
@@ -130,6 +168,30 @@ export default function CharacterMap({ character, onBack, onSelectCharacter }) {
                                         </ul>
                                     ) : (
                                         <p>No zones returned for this map.</p>
+                                    )}
+
+                                    <h3>Control Accumulation Scores</h3>
+                                    {isLoadingControlScores && <p>Loading control accumulation scores...</p>}
+                                    {!isLoadingControlScores && controlScoreError && (
+                                        <p className="error-message">{controlScoreError}</p>
+                                    )}
+                                    {!isLoadingControlScores && !controlScoreError && controlScores.length === 0 && (
+                                        <p>No control accumulation scores found for this map.</p>
+                                    )}
+                                    {!isLoadingControlScores && !controlScoreError && controlScores.length > 0 && (
+                                        <ul className="control-score-list">
+                                            {controlScores.map((score, index) => (
+                                                <li
+                                                    key={`${score.TeamId}-${score.MapId}-${score.ZoneId}-${index}`}
+                                                    className="control-score-item"
+                                                >
+                                                    <span>Map {score.MapId}</span>
+                                                    <span>Zone {score.ZoneId} ({zoneNameById.get(score.ZoneId) ?? 'Unknown'})</span>
+                                                    <span>Team {score.TeamId}</span>
+                                                    <span>Accumulation {Number(score.Accumulation ?? 0).toFixed(2)}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     )}
                                 </>
                             )}
