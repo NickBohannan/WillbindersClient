@@ -116,7 +116,7 @@ export default function CharacterMap({ character, onBack, onSelectCharacter }) {
         ? new Map(
             mapData.Zones
                 .map((zone) => [zone.ZoneId ?? zone.Id, zone.Name ?? 'Unnamed Zone'])
-                .filter(([zoneId]) => Number.isFinite(zoneId))
+                .filter(([zoneId]) => typeof zoneId === 'string' && zoneId.length > 0)
         )
         : new Map();
 
@@ -131,7 +131,7 @@ export default function CharacterMap({ character, onBack, onSelectCharacter }) {
                 {hasCharacter ? (
                     <>
                         <p>You entered your character's current map.</p>
-                        <p><strong>Character:</strong> #{character.CharacterId}</p>
+                        <p><strong>Character ID:</strong> {character.CharacterId}</p>
                         <p><strong>Map:</strong> {character.CurrentMap}</p>
                         <p><strong>Zone:</strong> {character.CurrentZone}</p>
                         <p><strong>Team:</strong> {character.TeamId}</p>
@@ -215,7 +215,7 @@ export default function CharacterMap({ character, onBack, onSelectCharacter }) {
                                                 mapCharacter.CharacterId === character.CharacterId ? 'is-current' : ''
                                             }`}
                                         >
-                                            <span>#{mapCharacter.CharacterId}</span>
+                                            <span>{mapCharacter.CharacterId}</span>
                                             <span>Team {mapCharacter.TeamId}</span>
                                             <span>Zone {mapCharacter.CurrentZone}</span>
                                             <span>Power {mapCharacter.Power}</span>

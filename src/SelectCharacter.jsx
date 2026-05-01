@@ -48,7 +48,7 @@ export default function SelectCharacter({ onBack, onEnterMap = () => {} }) {
                     <ul className="character-list">
                         {characters.map((character) => (
                             <li key={character.CharacterId} className="character-item">
-                                <h2>Character #{character.CharacterId}</h2>
+                                <h2>Character ID: {character.CharacterId}</h2>
                                 <p>Team: {character.TeamId}</p>
                                 <p>Map: {character.CurrentMap}</p>
                                 <p>Zone: {character.CurrentZone}</p>
